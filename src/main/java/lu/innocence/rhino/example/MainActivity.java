@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.faendir.rhino_android.RhinoAndroidHelper;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.shell.Global;
 
@@ -49,9 +50,11 @@ public class MainActivity extends Activity {
                 testScript += "person.printDetails();";
                 context.evaluateString(global, testScript, "test.js", 1, null);
 
-                Object personObject = scope.get("person",global);
+                Object personObject = global.get("person",global);
                 if (personObject != Scriptable.NOT_FOUND) {
-                    Person personHandle = (Person) personObject;
+
+                    NativeJavaObject jsObjHandle = (NativeJavaObject) personObject;
+                    Person personHandle = (Person) jsObjHandle.unwrap();
                     textView.setText(String.format("Person: { name:%s , age:%s }",
                             personHandle.getName(),personHandle.getAge()));
                 } else {
