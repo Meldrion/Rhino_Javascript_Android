@@ -64,7 +64,6 @@ public class MainActivity extends Activity {
                     context.evaluateString(global, script2, "test.js", 1, null);
                 }
 
-
             }
         });
 
